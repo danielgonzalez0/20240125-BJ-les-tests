@@ -40,3 +40,5 @@ function main() {
 
   console.log('Votre mot de passe généré est:', password);
 }
+
+main();
