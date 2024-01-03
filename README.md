@@ -50,7 +50,7 @@ node index.js
 Si tu souhaites lancer les "tests" pour les parties 1 à 2, tu peux faire :
 
 ```bash
-node test.js
+node generatePassword.test.js
 ```
 
 Pour la suite, on devra utiliser `vitest` pour lancer les tests.

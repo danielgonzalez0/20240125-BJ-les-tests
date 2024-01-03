@@ -4,7 +4,7 @@ Dans ce projet, que tu as déjà réalisé, on va venir tester la fonction `gene
 
 Pour ça, on va venir comprendre comment fonctionnent les tests en "recréant" un outil pour tester.
 
-Tu trouveras un fichier `test.js` dans lequel on va créer nos tests.
+Tu trouveras un fichier `generatePassword.test.js` dans lequel on va créer nos tests.
 
 ## Part 1 : Fonction `test`
 
@@ -37,7 +37,7 @@ Notre fonction va ensuite retourner un objet avec deux propriétés :
 N'hésite pas à t'aider de Google et ChatGPT si tu ne vois pas comment faire, mais le but est de pouvoir utiliser tes fonctions de cette manière :
 
 ```js
-test('8 characters password is generated', () => {
+test("8 characters password is generated", () => {
   const password = generatePassword(8, false, false, false);
 
   expect(password).toHaveLength(8);
@@ -72,21 +72,15 @@ PS : J'ai exclu les solutions pour que tu ne voies que le test que tu as.
 
 Comme ça, en faisant `npm run test`, on va lancer vitest.
 
-3. Remplacer les imports dans notre fichier `test.js`
+3. Remplacer les imports dans notre fichier `generatePassword.test.js`
 
 ```js
-import { expect, test } from 'vitest';
+import { expect, test } from "vitest";
 ```
 
 Et tu peux supprimer nos fonctions personnalisées.
 
-4. Renommer `test.js` en `generatePassword.test.js`
-
-Souvent, on aime bien donner le nom du fichier qu'on teste, suivi de `.test.js` pour savoir que c'est un fichier de test.
-
-C'est aussi cette extension `test.js` qui va permettre à vitest de savoir qu'il doit lancer ce fichier.
-
-5. Lancer `npm run test`
+4. Lancer `npm run test`
 
 Normalement, tout devrait fonctionner et tu devrais voir les tests s'afficher.
 
@@ -105,8 +99,8 @@ En gros, ici on va venir "intercepter" l'appel à `prompt` et on va pouvoir lui 
 Le code ressemble à ceci :
 
 ```js
-vi.mock('./prompt.js', () => ({
-  prompt: vi.fn(() => '8'),
+vi.mock("./prompt.js", () => ({
+  prompt: vi.fn(() => "8"),
 }));
 ```
 
@@ -119,7 +113,7 @@ Car il va falloir, au début de chaque test, utiliser [`vi.mocked`](https://vite
 En faisant un truc du genre :
 
 ```js
-vi.mocked(prompt).mockReturnValue('8');
+vi.mocked(prompt).mockReturnValue("8");
 ```
 
 On vient modifier la valeur retournée par `prompt` pour que ce soit `8`.
@@ -127,8 +121,8 @@ On vient modifier la valeur retournée par `prompt` pour que ce soit `8`.
 Ce qui nous permet de créer notre premier test :
 
 ```js
-test('ask password length with valid values', () => {
-  vi.mocked(prompt).mockReturnValue('8');
+test("ask password length with valid values", () => {
+  vi.mocked(prompt).mockReturnValue("8");
 
   const result = askPasswordLength();
 
