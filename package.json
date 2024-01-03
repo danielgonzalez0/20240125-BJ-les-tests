@@ -1,0 +1,17 @@
+{
+  "name": "3.password-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "vitest --exclude ./solutions",
+    "test-solution": "vitest solutions"
+  },
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "readline-sync": "^1.4.10",
+    "vitest": "^1.1.1"
+  }
+}
