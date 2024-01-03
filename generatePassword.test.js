@@ -25,6 +25,8 @@ if (!passwordWithSpecial.split("").some((char) => SPECIALS.includes(char))) {
   throw new Error("Password should contain special characters");
 }
 
+console.log("✅ Test 2 passed");
+
 // 🦁 Wrap le code ci-dessous dans un appel de "test"
 // Teste si le mot de passe ne contient PAS de caractère spécial si non demandé
 const passwordWithoutSpecial = generatePassword(8, false, false, false);
@@ -33,4 +35,4 @@ if (passwordWithoutSpecial.split("").some((char) => SPECIALS.includes(char))) {
   throw new Error("Password should NOT contain special characters");
 }
 
-console.log("✅ Test 2 passed");
+console.log("✅ Test 3 passed");
