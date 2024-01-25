@@ -38,7 +38,7 @@ function main() {
 
   const password = generatePassword(length, special, numbers, uppercase);
 
-  console.log('Votre mot de passe généré est:', password);
+  console.log('Votre mot de passe généré est le suivant:', password);
 }
 
 main();
