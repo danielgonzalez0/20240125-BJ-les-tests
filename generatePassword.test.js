@@ -1,41 +1,54 @@
 import { SPECIALS, generatePassword } from "./generatePassword.js";
 
-// 🦁 Créer une fonction "test" qui prend deux arguments :
-// - "name" qui est une string
-// - "fn" qui est une fonction
-// Ensuite, tu vas exécuter la fonction "fn"
-// - Si elle ne lance pas d'erreur, tu affiches "✅ Test ${name} passed"
-// - Si elle lance une erreur, tu affiches "❌ Test ${name} failed: ${error.message}"
-
-function test(name,fn){
-  try{
+const test = (name, fn) => {
+  try {
     fn();
     console.log(`✅ Test ${name} passed`);
-  }catch(error){
+  } catch (error) {
     console.log(`❌ Test ${name} failed: ${error.message}`);
   }
 }
 
-test("password should have 8 charcaters", ()=>{
+const expect = (actual) => {
+  const result = {
+    toBe: (expected) => {
+      if (actual !== expected) {
+        throw new Error(`${actual} is not equal to ${expected}`);
+      }
+    },
+    toHabeLength: (expected) => {
+      if (actual.length !== expected) {
+        throw new Error(`${actual} length is not equal to ${expected}`);
+      }
+    },
+  }
+
+  return result;
+}
+
+test("password should have 8 charcaters", () => {
+
   const password = generatePassword(8, false, false, false);
-  if(password.length !== 8){
-    throw new Error("Password should have 8 characters");
-  }
+
+  expect(password).toHabeLength(8);
 })
 
-test("password should contain special characters", ()=>{
+test("password should contain special characters", () => {
+
   const passwordWithSpecial = generatePassword(8, true, false, false);
-  if(!passwordWithSpecial.split("").some((char)=> SPECIALS.includes(char))){
-    throw new Error("Password should contain special characters");
-  }
+
+  const passwordHasSpecial = passwordWithSpecial.split("").some((char) => SPECIALS.includes(char));
+
+  expect(passwordHasSpecial).toBe(true);
+
 })
 
-test("password should NOT contain special characters", ()=>{
+test("password should NOT contain special characters", () => {
 
   const passwordWithoutSpecial = generatePassword(8, false, false, false);
 
-  if (passwordWithoutSpecial.split("").some((char) => SPECIALS.includes(char))) {
-    throw new Error("Password should NOT contain special characters");
-  }
+  const passwordHasSpecial = passwordWithoutSpecial.split("").some((char) => SPECIALS.includes(char));
+
+  expect(passwordHasSpecial).toBe(false);
 })
 
