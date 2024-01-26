@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "node generatePassword.test.js",
+    "test": "vitest --exclude ./solutions",
     "test-solution": "vitest solutions"
   },
   "type": "module",

@@ -1,36 +1,14 @@
-import { SPECIALS, generatePassword } from "./generatePassword.js";
 
-const test = (name, fn) => {
-  try {
-    fn();
-    console.log(`✅ Test ${name} passed`);
-  } catch (error) {
-    console.log(`❌ Test ${name} failed: ${error.message}`);
-  }
-}
+import { SPECIALS, askPasswordLength, askSpecialChars, generatePassword } from "./generatePassword.js";
+import { expect, test, vi } from "vitest";
+import { prompt } from "./prompt.js";
 
-const expect = (actual) => {
-  const result = {
-    toBe: (expected) => {
-      if (actual !== expected) {
-        throw new Error(`${actual} is not equal to ${expected}`);
-      }
-    },
-    toHabeLength: (expected) => {
-      if (actual.length !== expected) {
-        throw new Error(`${actual} length is not equal to ${expected}`);
-      }
-    },
-  }
-
-  return result;
-}
 
 test("password should have 8 charcaters", () => {
 
   const password = generatePassword(8, false, false, false);
 
-  expect(password).toHabeLength(8);
+  expect(password).toHaveLength(8);
 })
 
 test("password should contain special characters", () => {
@@ -52,3 +30,58 @@ test("password should NOT contain special characters", () => {
   expect(passwordHasSpecial).toBe(false);
 })
 
+
+//intercepter prompt
+vi.mock("./prompt.js", () => ({
+  prompt: vi.fn(() => "8"),
+}));
+
+
+test("ask password length with valid values", () => {
+  vi.mocked(prompt).mockReturnValue("8");
+
+  const result = askPasswordLength();
+
+  expect(result).toBe(8);
+});
+
+test("ask password length with invalid values", () => {
+
+  const errorMessage = /^La longueur du mot de passe doit être comprise entre 8 et 36 caractères.$/
+
+  vi.mocked(prompt).mockReturnValue("abc");
+  expect(() => askPasswordLength()).toThrowError(errorMessage);
+
+  vi.mocked(prompt).mockReturnValue("7");
+  expect(() => askPasswordLength()).toThrowError(errorMessage);
+
+  vi.mocked(prompt).mockReturnValue("37");
+  expect(() => askPasswordLength()).toThrowError(errorMessage);
+
+  vi.mocked(prompt).mockReturnValue("");
+  expect(() => askPasswordLength()).toThrowError(errorMessage);
+});
+
+test('ask specials characters with invalid answer', () => {
+
+  const errorMessage = /^Veuillez répondre par "y" pour oui ou "n" pour non.$/
+
+  vi.mocked(prompt).mockReturnValue("abc");
+  expect(() => askSpecialChars()).toThrowError(errorMessage);
+
+  vi.mocked(prompt).mockReturnValue("");
+
+  expect(() => askSpecialChars()).toThrowError(errorMessage);
+  vi.mocked(prompt).mockReturnValue(10);
+
+});
+
+test('ask specials characters with valid answer', () => {
+
+  vi.mocked(prompt).mockReturnValue("y");
+  expect(askSpecialChars()).toBe(true);
+
+  vi.mocked(prompt).mockReturnValue("n");
+  expect(askSpecialChars()).toBe(false);
+
+});
