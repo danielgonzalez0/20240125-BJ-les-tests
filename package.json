@@ -6,7 +6,9 @@
   "scripts": {
     "test": "vitest --exclude ./solutions",
     "test-solution": "vitest solutions",
-    "robot": "node ./robots/script.js"
+    "test-robot": "vitest robots",
+    "robot": "node ./robots/script.js",
+    "robot-coverage": "vitest robots run --coverage"
   },
   "type": "module",
   "author": "",
@@ -14,5 +16,8 @@
   "dependencies": {
     "readline-sync": "^1.4.10",
     "vitest": "^1.1.1"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^1.2.2"
   }
 }
