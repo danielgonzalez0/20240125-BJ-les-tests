@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "vitest --exclude ./solutions",
-    "test-solution": "vitest solutions"
+    "test-solution": "vitest solutions",
+    "robot": "node ./robots/script.js"
   },
   "type": "module",
   "author": "",
